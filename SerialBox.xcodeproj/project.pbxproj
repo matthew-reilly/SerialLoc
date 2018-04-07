@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		247B313590376F9A77AE6418 /* SerialBoxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247B3320B7156248097A7DB9 /* SerialBoxTests.swift */; };
 		247B32B4B03FFFD89E62B318 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247B3A3DAAA5584CCC301D10 /* AppDelegate.swift */; };
-		247B33BAC78651ACF3AC89A6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 247B3794F847A0E8B3C565E7 /* Main.storyboard */; };
 		247B35246A5D70F6F2BB1C69 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 247B36B4C23EAC39CF755399 /* LaunchScreen.storyboard */; };
 		247B374A3C6EA23A72F7ACB4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 247B369E31A0CE6A0B27A7F4 /* Assets.xcassets */; };
 		247B376403E7AA053BD8ABBB /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247B3066085F2B75CF6C671C /* RootViewController.swift */; };
@@ -37,7 +36,6 @@
 		247B3675F5FA44C65DE179C8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		247B369E31A0CE6A0B27A7F4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		247B38201C0978323F61AE79 /* SerialBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SerialBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		247B398DE9662764B0AF8231 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		247B3A3DAAA5584CCC301D10 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		247B3B24393830A7753F8AEB /* SerialBoxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SerialBoxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		247B3C1D599C4944624149A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
@@ -73,7 +71,6 @@
 				247B369E31A0CE6A0B27A7F4 /* Assets.xcassets */,
 				247B36B4C23EAC39CF755399 /* LaunchScreen.storyboard */,
 				247B3A3DAAA5584CCC301D10 /* AppDelegate.swift */,
-				247B3794F847A0E8B3C565E7 /* Main.storyboard */,
 				247B3066085F2B75CF6C671C /* RootViewController.swift */,
 			);
 			path = SerialBox;
@@ -212,7 +209,6 @@
 			files = (
 				247B374A3C6EA23A72F7ACB4 /* Assets.xcassets in Resources */,
 				247B35246A5D70F6F2BB1C69 /* LaunchScreen.storyboard in Resources */,
-				247B33BAC78651ACF3AC89A6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,14 +351,6 @@
 				247B3675F5FA44C65DE179C8 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-		247B3794F847A0E8B3C565E7 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				247B398DE9662764B0AF8231 /* Base */,
-			);
-			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -552,6 +540,7 @@
 				247B3C06AE8035AD34DC53FE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		247B3537AA53B14EF3A3C531 /* Build configuration list for PBXNativeTarget "SerialBoxTests" */ = {
 			isa = XCConfigurationList;
@@ -560,6 +549,7 @@
 				247B3E83561744D486F42A74 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
