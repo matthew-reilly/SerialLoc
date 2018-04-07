@@ -98,11 +98,11 @@ class RootViewController: UIViewController, CLLocationManagerDelegate, MKMapView
     }
 
     func buildToolbar() -> [UIBarButtonItem] {
-        let fixed    = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        let space    = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         let work
                      = UIBarButtonItem(title: "Go to work", style: .plain, target: self, action: #selector(clickedWork(sender:)))
         let vacation = UIBarButtonItem(title: "Go on vacation", style: .plain, target: self, action: #selector(clickedVacation(sender:)))
-        return [work, fixed, vacation]
+        return [work, a, vacation]
     }
 
     @objc
@@ -128,23 +128,23 @@ class RootViewController: UIViewController, CLLocationManagerDelegate, MKMapView
         self.title = title
     }
 
-    func buildDirections(to: CLLocationCoordinate2D) {
+    func buildDirections(to destination: CLLocationCoordinate2D) {
         guard let currLoc = self.currentLocation?.coordinate else {
             self.updateState(state: .error)
             return
         }
         let request = MKDirectionsRequest()
         request.source = MKMapItem(placemark: MKPlacemark(coordinate: currLoc, addressDictionary: nil))
-        request.destination = MKMapItem(placemark: MKPlacemark(coordinate: to, addressDictionary: nil))
+        request.destination = MKMapItem(placemark: MKPlacemark(coordinate: destination, addressDictionary: nil))
         request.transportType = .automobile
         let directions = MKDirections(request: request)
         directions.calculate { [unowned self] response, error in
-            guard let unwrappedResponse = response else {
+            guard let directions = response else {
                 self.updateState(state: .error)
                 print("No location found")
                 return
             }
-            for route in unwrappedResponse.routes {
+            for route in directions.routes {
                 self.mapView.add(route.polyline)
             }
             self.updateState(state: .found)
