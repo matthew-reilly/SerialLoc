@@ -101,7 +101,7 @@ class RootViewController: UIViewController, CLLocationManagerDelegate, MKMapView
         let fixed    = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         let work
                      = UIBarButtonItem(title: "Go to work", style: .plain, target: self, action: #selector(clickedWork(sender:)))
-        let vacation = UIBarButtonItem(title: "Go to vacation", style: .plain, target: self, action: #selector(clickedVacation(sender:)))
+        let vacation = UIBarButtonItem(title: "Go on vacation", style: .plain, target: self, action: #selector(clickedVacation(sender:)))
         return [work, fixed, vacation]
     }
 
