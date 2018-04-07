@@ -49,12 +49,12 @@ enum Locations {
 }
 
 class RootViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
-    let headerTitle                = "Location"
-    let mapView                    = MKMapView()
-    let locationManager            = CLLocationManager()
+    let headerTitle     = "Location"
+    let mapView         = MKMapView()
+    let locationManager = CLLocationManager()
     var currentLocation: CLLocation?
-    var current: Locations?
-    var state:           ViewState = .found
+    var current:         Locations?
+    var state = ViewState.found
     lazy var loading: UIView = {
         let loader = UIActivityIndicatorView()
         loader.startAnimating()
@@ -130,8 +130,7 @@ class RootViewController: UIViewController, CLLocationManagerDelegate, MKMapView
 
     func buildDirections(to: CLLocationCoordinate2D) {
         guard let currLoc = self.currentLocation?.coordinate else {
-            self.updateState(state: .found)
-            print("No location available")
+            self.updateState(state: .error)
             return
         }
         let request = MKDirectionsRequest()
@@ -139,8 +138,10 @@ class RootViewController: UIViewController, CLLocationManagerDelegate, MKMapView
         request.destination = MKMapItem(placemark: MKPlacemark(coordinate: to, addressDictionary: nil))
         request.transportType = .automobile
         let directions = MKDirections(request: request)
-        directions.calculate { [unowned self] response, _ in
+        directions.calculate { [unowned self] response, error in
             guard let unwrappedResponse = response else {
+                self.updateState(state: .error)
+                print("No location found")
                 return
             }
             for route in unwrappedResponse.routes {
@@ -168,8 +169,11 @@ class RootViewController: UIViewController, CLLocationManagerDelegate, MKMapView
             case .loading:
                 self.loading.isHidden = false
             case .error:
-                self.loading.isHidden = false
-                self.title = "Error"
+                self.loading.isHidden = true
+                let alertController = UIAlertController(title: "Error", message:
+                "Location Error", preferredStyle: UIAlertControllerStyle.alert)
+                alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alertController, animated: true, completion: nil)
         }
     }
 
@@ -192,9 +196,10 @@ class RootViewController: UIViewController, CLLocationManagerDelegate, MKMapView
         let search = MKLocalSearch(request: request)
         search.start { response, _ in
             guard let response = response else {
+                self.updateState(state: .error)
                 return
             }
-            let span   = MKCoordinateSpanMake(0.05, 0.05)
+            let span   = MKCoordinateSpanMake(0.1, 0.1)
             let region = MKCoordinateRegionMake(self.parseMapQuery(response: response), span)
             self.mapView.setRegion(region, animated: true)
             self.buildDirections(to: region.center)
@@ -205,6 +210,7 @@ class RootViewController: UIViewController, CLLocationManagerDelegate, MKMapView
         if !response.mapItems.isEmpty {
             return response.mapItems[0].placemark.coordinate
         } else {
+            print("Failed to parse location")
             return CLLocationCoordinate2D(latitude: 0, longitude: 0)
         }
     }
