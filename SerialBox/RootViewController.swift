@@ -37,6 +37,15 @@ enum Locations {
                 return "222 Broadway, New York, NY 10038"
         }
     }
+
+    var color: UIColor {
+        switch self {
+            case .Cancun:
+                return .cyan
+            case .NYC:
+                return .red
+        }
+    }
 }
 
 class RootViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
@@ -44,6 +53,7 @@ class RootViewController: UIViewController, CLLocationManagerDelegate, MKMapView
     let mapView                    = MKMapView()
     let locationManager            = CLLocationManager()
     var currentLocation: CLLocation?
+    var current: Locations?
     var state:           ViewState = .found
     lazy var loading: UIView = {
         let loader = UIActivityIndicatorView()
@@ -91,20 +101,27 @@ class RootViewController: UIViewController, CLLocationManagerDelegate, MKMapView
         let fixed    = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         let work
                      = UIBarButtonItem(title: "Go to work", style: .plain, target: self, action: #selector(clickedWork(sender:)))
-        let vacation = UIBarButtonItem(title: "Go to vacation", style: .plain, target: self, action: #selector(clickedMexico(sender:)))
+        let vacation = UIBarButtonItem(title: "Go to vacation", style: .plain, target: self, action: #selector(clickedVacation(sender:)))
         return [work, fixed, vacation]
     }
 
     @objc
     func clickedWork(sender: UIBarButtonItem) {
-        navigate(to: Locations.NYC.address())
-        updateTitle(Locations.NYC.title())
+        setLocation(.NYC)
     }
 
     @objc
-    func clickedMexico(sender: UIBarButtonItem) {
-        navigate(to: Locations.Cancun.address())
-        updateTitle(Locations.Cancun.title())
+    func clickedVacation(sender: UIBarButtonItem) {
+        setLocation(.Cancun)
+    }
+
+    func setLocation(_ location: Locations) {
+        if self.state == .loading {
+            return
+        }
+        self.current = location
+        navigate(to: location.address())
+        updateTitle(location.title())
     }
 
     func updateTitle(_ title: String) {
@@ -128,11 +145,9 @@ class RootViewController: UIViewController, CLLocationManagerDelegate, MKMapView
             }
             for route in unwrappedResponse.routes {
                 self.mapView.add(route.polyline)
-                var rect = route.polyline.boundingMapRect
             }
             self.updateState(state: .found)
         }
-
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -142,7 +157,7 @@ class RootViewController: UIViewController, CLLocationManagerDelegate, MKMapView
 
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let renderer = MKPolylineRenderer(polyline: overlay as! MKPolyline)
-        renderer.strokeColor = .cyan
+        renderer.strokeColor = self.current?.color ?? .black
         return renderer
     }
 
