@@ -66,7 +66,7 @@ class RootViewController: UIViewController, CLLocationManagerDelegate, MKMapView
         self.view.addSubview(loadingView)
         loadingView.addSubview(loader)
         loadingView.snp.makeConstraints { (make) -> Void in
-            make.center.equalTo(self.view)
+            make.center.equalTo(view)
             make.size.equalTo(50)
         }
         loader.snp.makeConstraints { (make) -> Void in
@@ -102,7 +102,7 @@ class RootViewController: UIViewController, CLLocationManagerDelegate, MKMapView
         let work
                      = UIBarButtonItem(title: "Go to work", style: .plain, target: self, action: #selector(clickedWork(sender:)))
         let vacation = UIBarButtonItem(title: "Go on vacation", style: .plain, target: self, action: #selector(clickedVacation(sender:)))
-        return [work, a, vacation]
+        return [work, space, vacation]
     }
 
     @objc
